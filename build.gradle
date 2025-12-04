@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.8'
+    id 'io.spring.dependency-management' version '1.1.7'
+    // optional: graalvm native build tools plugin (helps if you want to run nativeCompile locally)
+    id 'org.graalvm.buildtools.native' version '0.11.1'
+}
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+
+// Optional: configure bootBuildImage specifics
+bootBuildImage {
+    imageName = "myservice:0.0.1-native"
+    // Builder that supports native images (Paketo). You can pick 'paketobuildpacks/builder:full'
+    // or 'tiny' depending on size/requirements.
+    builder = 'paketobuildpacks/builder:tiny'
+    environment = [
+        // Request the native image buildpack
+        'BP_NATIVE_IMAGE' : 'true'
+    ]
+}
+
+
+// Optional: GraalVM native buildtools plugin config (if you want to run nativeCompile locally)
+graalvmNative {
+    binaries {
+        main {
+            imageName = "myservice-native"
+        }
+    }
+}

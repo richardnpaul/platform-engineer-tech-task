@@ -1,0 +1,17 @@
+### Gradle local state
+.gradle/
+
+### Build outputs
+build/
+**/build/
+
+### IDE / editor metadata
+.idea/
+.vscode/
+*.iml
+
+### OS/editor noise
+*.log
+*.swp
+*.swo
+.DS_Store
