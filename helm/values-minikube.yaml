@@ -1,0 +1,4 @@
+image:
+  repository: myservice
+  tag: local
+  pullPolicy: Never

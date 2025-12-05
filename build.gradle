@@ -51,7 +51,7 @@ bootBuildImage {
 graalvmNative {
     binaries {
         main {
-            imageName = "myservice-native"
+            imageName = "myservice"
         }
     }
 }
